@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
 
-public class NotificationServer {
+public class serwer {
     private static final int SERVER_PORT = 12345;
     private static ExecutorService executor = Executors.newCachedThreadPool();
     private static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);

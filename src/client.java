@@ -2,8 +2,9 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-public class NotificationClient {
+public class client {
     private static final int SERVER_PORT = 12345;
+    private static final int MAX_WAIT_TIME = 15;
 
     public static void main(String[] args) {
         try (Socket socket = new Socket("localhost", SERVER_PORT);
@@ -19,7 +20,7 @@ public class NotificationClient {
             String timeStr = scanner.nextLine();
 
             try {
-                validateInput(notification, timeStr);
+                validate(notification, timeStr);
                 out.println(notification);
                 out.println(timeStr);
                 out.flush();
@@ -27,7 +28,7 @@ public class NotificationClient {
                 System.out.println("Oczekiwanie na odpowiedz ...");
 
                 String receivedNotification = null;
-                for (int i = 0; i < 5; i++) { // 1 s delay
+                for (int i = 0; i < MAX_WAIT_TIME; i++) { // 1 s delay
                     Thread.sleep(1000);
                     if (in.ready()) {
                         receivedNotification = in.readLine();
@@ -45,7 +46,7 @@ public class NotificationClient {
         }
     }
 
-    private static void validateInput(String notification, String timeStr) throws InvalidInputException {
+    private static void validate(String notification, String timeStr) throws InvalidInputException {
         if (notification == null || notification.trim().isEmpty()) {
             throw new InvalidInputException("Wiadmosc nie moze być pusta.");
         }
