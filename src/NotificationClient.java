@@ -13,10 +13,9 @@ public class NotificationClient {
 
             System.out.println("Połączono z serwerem.");
 
-            // Pobranie notyfikacji od użytkownika
-            System.out.print("Podaj treść notyfikacji: ");
+            System.out.print("Podaj wiadomosc: ");
             String notification = scanner.nextLine();
-            System.out.print("Podaj czas odesłania notyfikacji (w sekundach): ");
+            System.out.print("Podaj czas : ");
             String timeStr = scanner.nextLine();
 
             try {
@@ -25,12 +24,10 @@ public class NotificationClient {
                 out.println(timeStr);
                 out.flush();
 
-                // Oczekiwanie na odpowiedź serwera
-                System.out.println("Oczekiwanie na odpowiedź serwera...");
+                System.out.println("Oczekiwanie na odpowiedz ...");
 
-                // Dodanie opóźnienia, aby upewnić się, że klient czeka na odpowiedź
                 String receivedNotification = null;
-                for (int i = 0; i < 5; i++) { // Ponów próbę 5 razy z 1-sekundowym odstępem
+                for (int i = 0; i < 5; i++) { // 1 s delay
                     Thread.sleep(1000);
                     if (in.ready()) {
                         receivedNotification = in.readLine();
@@ -38,31 +35,27 @@ public class NotificationClient {
                     }
                 }
 
-                System.out.println("Otrzymana notyfikacja: " + receivedNotification);
+                System.out.println("Otrzymana wiadmosc: " + receivedNotification);
 
-                // Debugowanie
-                if (receivedNotification == null) {
-                    System.out.println("Błąd: otrzymana notyfikacja to null.");
-                }
             } catch (InvalidInputException | InterruptedException e) {
-                System.err.println("Błąd: " + e.getMessage());
+                System.err.println("Blad: " + e.getMessage());
             }
         } catch (IOException e) {
-            System.err.println("Błąd połączenia z serwerem: " + e.getMessage());
+            System.err.println("Bład polaczenia z serwerem: " + e.getMessage());
         }
     }
 
     private static void validateInput(String notification, String timeStr) throws InvalidInputException {
         if (notification == null || notification.trim().isEmpty()) {
-            throw new InvalidInputException("Treść notyfikacji nie może być pusta.");
+            throw new InvalidInputException("Wiadmosc nie moze być pusta.");
         }
         try {
             int time = Integer.parseInt(timeStr);
             if (time <= 0) {
-                throw new InvalidInputException("Czas musi być większy od zera.");
+                throw new InvalidInputException("Czas musi być wiekszy od zera.");
             }
         } catch (NumberFormatException e) {
-            throw new InvalidInputException("Nieprawidłowy format czasu.");
+            throw new InvalidInputException("Nieprawidlowy format musisz podac czas w sekundach.");
         }
     }
 }
