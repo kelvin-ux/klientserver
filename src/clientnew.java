@@ -2,7 +2,7 @@ import java.io.*;
 import java.net.*;
 import java.util.Scanner;
 
-public class NotificationClient {
+public class clientnew {
     private static final int SERVER_PORT = 12345;
 
     public static void main(String[] args) {
@@ -67,3 +67,8 @@ public class NotificationClient {
     }
 }
 
+class InvalidInputException extends Exception {
+    public InvalidInputException(String message) {
+        super(message);
+    }
+}
